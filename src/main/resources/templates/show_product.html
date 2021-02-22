@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>V-Store</h1>
+<div th:insert="_menu"/>
+<div>
+    <h2 th:text="${product.getName_product()}"/>
+    <p th:text="'ID: ' + ${product.getId_product()}"/>
+    <p th:text="'Price: ' + ${product.getPrice()}"/>
+    <p th:text="'Number: ' + ${product.getNumber()}"/>
+</div>
+<form method="POST" th:action="@{/product/buy}">
+    <label for="numberField">Number: </label>
+    <input name="num" id="numberField" type="number" value="1" min="1"><br>
+    <input type="hidden" name="id" id="productId" th:value="${product.getId_product()}" />
+    <button type="submit" name="submit" value="value" class="link-button">BUY</button>
+</form>
+</body>
+</html>

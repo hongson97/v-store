@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Viet Nguyen-Quoc</title>
+</head>
+<body>
+<h1>Login Form</h1>
+<br>
+<br>
+<form action="/login" method="POST" id="loginForm">
+    <div>
+        <label for="userNameField">User Name: </label>
+        <input name="userName" id="userNameField"><br>
+        <label for="passwordField">Password: </label>
+        <input type='password' name="password" id="passwordField"><br><br>
+        <button>LOGIN</button>
+    </div>
+</form>
+<a href="/sign-up" target="_blank">Create New Account</a>
+<i><p th:text="${msg}" th:if="${msg ne null}"/></i>
+</body>
+</html>
