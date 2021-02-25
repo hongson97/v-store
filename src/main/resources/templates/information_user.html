@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>V-Store</h1>
+<div th:insert="_menu"/>
+
+<div>
+    <h2>My Infor</h2>
+</div>
+<div>
+    <p th:text="'User name: ' + ${session.user.getUser_name()}"/>
+    <p th:text="'Full name: ' + ${session.user.getName()}"/>
+    <p th:text="'Age      : ' + ${session.user.getAge()}"/>
+    <p th:text="'Wallet   : ' + ${session.user.getWallet()} + ' VNĐ'"/>
+    <p th:text="'Email    : ' + ${session.user.getEmail()}"/>
+
+</div>
+
+<div>
+    <button type="button" onclick="loadDoc()">Show Bill</button>
+    <p id="demo"></p>
+<script th:inline="javascript">
+function loadDoc() {
+  var http = new XMLHttpRequest();
+  var url = '/product/showBill';
+  var params = /*[['<user><id_user>' + ${session.user.getId_user()} + '</id_user></user>']]*/ '<user><id_user>0</id_user></user>';
+  http.open('POST', url, true);
+
+http.setRequestHeader('Content-type', 'application/xml');
+
+http.onreadystatechange = function() {//Call a function when the state changes.
+    if(this.readyState == 4 && this.status == 200) {
+        document.getElementById("demo").innerHTML = http.responseText;
+    }
+}
+http.send(params);
+}
+</script>
+</div>
+</body>
+</html>

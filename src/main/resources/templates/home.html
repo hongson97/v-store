@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>V-Store</h1>
+<div th:insert="_menu"/>
+<p th:text="'Hello, ' + ${session.user.getName()} + '!'" />
+
+</body>
+</html>

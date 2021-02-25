@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="tableBill">
+<table id="myTable">
+    <tr>
+        <td>ID Product</td>
+        <td>Name product</td>
+        <td>Price</td>
+        <td>Number</td>
+        <td>Date</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p: ${listBill}">
+        <td th:text="${p.idProduct}">ID Product</td>
+        <td th:text="${p.nameProduct}">Name product</td>
+        <td th:text="${p.getPrice()}">Price</td>
+        <td th:text="${p.number}">Number</td>
+        <td th:text="${#dates.format(p.date, 'yyyy-MM-dd')}">Date</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>

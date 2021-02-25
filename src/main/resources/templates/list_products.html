@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>V-Store</h1>
+<div th:insert="_menu"/>
+
+<div>
+    <form action="/product/find" method="GET" id="findProduct">
+        <div>
+            <input name="name"><button>SEARCH</button>
+        </div>
+    </form>
+</div>
+<div>
+    <h2>List Products</h2>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Product</th>
+            <th>Number</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p: ${listProducts}">
+            <td th:text="${p.getId_product()}">ID</td>
+            <td><a th:text="${p.getName_product()}" th:href="@{/product/show?(id=${p.getId_product()})}">Product</a></td>
+            <td th:text="${p.getNumber()}">Number</td>
+            <td th:text="${p.getPrice()} + ' VNĐ'">Price</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
