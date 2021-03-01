@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>V-Store</h1>
+<div th:insert="_menu"/>
+
+<div>
+    <h2>Upload AVT</h2>
+</div>
+<br>
+<img th:src="'/avt/' + ${avt}" width="200" height="200">
+
+<form method="post" action="/upAVT" enctype="multipart/form-data" >
+    File: <input id="file" name="image" type="file" accept="image/*" /> <br /> <br />
+    <input type="submit" value="Submit" />
+
+</form>
+<script>
+    function sendJSON(){
+
+            let multipartFile = document.querySelector('#file');
+
+            // Creating a XHR object
+            let xhr = new XMLHttpRequest();
+            let url = "/upAVT";
+
+            // open a connection
+            xhr.open("POST", url, true);
+
+            // Set the request header i.e. which type of content you are sending
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            // Create a state change callback
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+
+                    // Print received data from server
+                    location.replace(this.responseText);
+
+                }
+                else {
+                    document.getElementById("demo").innerHTML = "Error: Hay thuc hien lai hanh dong";
+                }
+            };
+
+            // Converting JSON data to string
+            var data = JSON.stringify({ "multipartFile": multipartFile.value});
+
+            // Sending data with the request
+            xhr.send(data);
+        }
+</script>
+<p id="demo" />
+<i><p th:text="${msg}" th:if="${msg ne null}"/></i>
+</body>
+</html>

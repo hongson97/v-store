@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>V-Store</h1>
+<div th:insert="_menu"/>
+
+<div>
+    <h2 Edit Info />
+</div>
+
+<br><img th:src="'/avt/' + ${user.getAvt()}" width="200" height="200">
+<br><a href="/upAVT" target="_self">Update AVT</a>
+<p>
+    <lable>User Name</lable>
+    <input id="userName" type="text" placeholder="User Name" readonly th:value="${user.getUser_name()}" /><br>
+
+    <lable>Name</lable>
+    <input id="name" type="text" placeholder="name" th:value="${user.getName()}"/><br>
+
+    <lable>Email</lable>
+    <input id="email" type="text" placeholder="email" th:value="${user.getEmail()}"/><br>
+
+    <lable>Age</lable>
+    <input id="age" type="number" placeholder="Age" th:value="${user.getAge()}"/><br>
+
+
+    <lable>Password</lable>
+    <input id="pass" type="password" placeholder="password" /><br>
+
+    <button type=button onclick="sendJSON()">Update</button>
+</form>
+<script>
+    function sendJSON(){
+
+            let name = document.querySelector('#name');
+            let email = document.querySelector('#email');
+            let age = document.querySelector('#age');
+            let pass = document.querySelector('#pass');
+
+
+            // Creating a XHR object
+            let xhr = new XMLHttpRequest();
+            let url = "/informationUser/edit";
+
+            // open a connection
+            xhr.open("POST", url, true);
+
+            // Set the request header i.e. which type of content you are sending
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            // Create a state change callback
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+
+                    // Print received data from server
+                    location.replace(this.responseText);
+
+                }
+                else {
+                    document.getElementById("demo").innerHTML = "Error: Hay thuc hien lai hanh dong";
+                }
+            };
+
+            // Converting JSON data to string
+            var data = JSON.stringify({ "name": name.value,
+                                        "email": email.value,
+                                        "age": age.value,
+                                        "password": pass.value,});
+
+            // Sending data with the request
+            xhr.send(data);
+        }
+</script>
+</p>
+
+<i><p th:text="${msg}" th:if="${msg ne null}"/></i>
+
+</body>
+</html>

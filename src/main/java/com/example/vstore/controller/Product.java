@@ -1,13 +1,15 @@
 package com.example.vstore.controller;
 
-import com.example.vstore.bind.*;
+import com.example.vstore.DAO.*;
+import com.example.vstore.mode.Bill;
+import com.example.vstore.mode.Products;
+import com.example.vstore.mode.User;
+import com.example.vstore.mode.ViewsBill;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
@@ -16,10 +18,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import java.io.StringReader;
 import java.util.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 @Controller
 @RequestMapping("/product")

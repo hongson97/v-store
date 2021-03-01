@@ -1,6 +1,9 @@
 package com.example.vstore.controller;
 
-import com.example.vstore.bind.*;
+import com.example.vstore.DAO.*;
+import com.example.vstore.mode.Bill;
+import com.example.vstore.mode.Products;
+import com.example.vstore.mode.User;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

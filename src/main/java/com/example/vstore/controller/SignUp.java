@@ -1,26 +1,13 @@
 package com.example.vstore.controller;
 
-import com.example.vstore.bind.User;
-import com.example.vstore.bind.UserServer;
-import com.example.vstore.bind.UserService;
+import com.example.vstore.mode.User;
+import com.example.vstore.DAO.UserServer;
+import com.example.vstore.DAO.UserService;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
-
-import java.io.IOException;
-import java.net.Authenticator;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Controller
 public class SignUp {

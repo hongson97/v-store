@@ -11,12 +11,13 @@
 <div>
     <h2>My Infor</h2>
 </div>
+<br><img th:src="'/avt/' + ${user.getAvt()}" width="200" height="200">
 <div>
-    <p th:text="'User name: ' + ${session.user.getUser_name()}"/>
-    <p th:text="'Full name: ' + ${session.user.getName()}"/>
-    <p th:text="'Age      : ' + ${session.user.getAge()}"/>
-    <p th:text="'Wallet   : ' + ${session.user.getWallet()} + ' VNĐ'"/>
-    <p th:text="'Email    : ' + ${session.user.getEmail()}"/>
+    <p th:text="'User name: ' + ${user.getUser_name()}"/>
+    <p th:text="'Full name: ' + ${user.getName()}"/>
+    <p th:text="'Age      : ' + ${user.getAge()}"/>
+    <p th:text="'Wallet   : ' + ${user.getWallet()} + ' VNĐ'"/>
+    <p th:text="'Email    : ' + ${user.getEmail()}"/>
 
 </div>
 
@@ -44,5 +45,6 @@ http.send(params);
 }
 </script>
 </div>
+<a href="/informationUser/edit" target="_self">Update info</a>
 </body>
 </html>
