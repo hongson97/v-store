@@ -37,4 +37,14 @@ public class UserService implements UserDetailsService {
         final User createdUser = userServer.save(user);
 
     }
+
+    public void updateUser(User user) {
+        User oldUser = userServer.findByUser_name1(user.getUser_name());
+        if (!user.getPassword().equals("")) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
+        else
+            user.setPassword(oldUser.getPassword());
+        userServer.save(user);
+    }
 }

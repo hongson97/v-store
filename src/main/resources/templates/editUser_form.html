@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>V-Store</h1>
+<div th:insert="_menu"/>
+<div th:insert="_adminMenu"/>
+
+<div>
+    <h2 th:text="'Edit User ' + ${user.getName()}"/>
+</div>
+
+<p>
+    <lable>User Name</lable>
+    <input id="userName" type="text" placeholder="User Name" th:value="${user.getUser_name()}" /><br>
+
+    <lable>Name</lable>
+    <input id="name" type="text" placeholder="name" th:value="${user.getName()}"/><br>
+
+    <lable>Email</lable>
+    <input id="email" type="text" placeholder="email" th:value="${user.getEmail()}"/><br>
+
+    <lable>Age</lable>
+    <input id="age" type="number" placeholder="Age" th:value="${user.getAge()}"/><br>
+
+    <lable>Wallet</lable>
+    <input id="wallet" type="number" th:value="${user.getWallet()}" min="0"/><br>
+
+    <lable>Password</lable>
+    <input id="pass" type="password" placeholder="password" /><br>
+
+    <lable>Role</lable>
+    <select id="role">
+        <option th:value="${user.getRole()}" selected disabled hidden>Choose here</option>
+        <option value="ROLE_USER">user</option>
+        <option value="ROLE_ADMIN">admin</option>
+    </select></br>
+
+    <lable>Enabled</lable>
+    <input id="enabled" type="checkbox" th:checked="${user.getEnabled()}"/><br>
+
+    <button type=button onclick="sendJSON()">Update</button>
+    <button form="deleteUser">Delete User</button>
+
+<form id="deleteUser" method="post" action="/admin/deleteUser">
+    <input type="hidden" name="id" th:value="${user.getId_user()}" >
+
+</form>
+    <script>
+    function sendJSON(){
+
+            let userName = document.querySelector('#userName');
+            let name = document.querySelector('#name');
+            let email = document.querySelector('#email');
+            let age = document.querySelector('#age');
+            let pass = document.querySelector('#pass');
+            let wallet = document.querySelector('#wallet');
+            let role = document.querySelector('#role');
+            var enabled = document.getElementById("enabled").checked;
+
+            // Creating a XHR object
+            let xhr = new XMLHttpRequest();
+            let url = "/admin/editUser";
+
+            // open a connection
+            xhr.open("POST", url, true);
+
+            // Set the request header i.e. which type of content you are sending
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            // Create a state change callback
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+
+                    // Print received data from server
+                    location.replace(this.responseText);
+
+                }
+                else {
+                    document.getElementById("demo").innerHTML = "Error: Hay thuc hien lai hanh dong";
+                }
+            };
+
+            // Converting JSON data to string
+            var data = JSON.stringify({ "user_name": userName.value,
+                                        "name": name.value,
+                                        "email": email.value,
+                                        "age": age.value,
+                                        "password": pass.value,
+                                        "wallet": wallet.value,
+                                        "role": role.value,
+                                        "enabled": enabled});
+
+            // Sending data with the request
+            xhr.send(data);
+        }
+</script>
+</p>
+
+<i><p th:text="${msg}" th:if="${msg ne null}"/></i>
+
+</body>
+</html>

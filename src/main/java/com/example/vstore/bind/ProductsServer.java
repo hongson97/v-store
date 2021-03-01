@@ -15,7 +15,4 @@ public interface ProductsServer extends JpaRepository<Products, Long>{
     @Query("select p from Products p where p.id_product = ?1")
     Products findByID(Long ID);
 
-    @Query("update Products p set p.number = ?1 where p.id_product = ?2")
-    void updateNumber(Long number, Long id);
-
 }

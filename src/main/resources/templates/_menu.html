@@ -5,7 +5,7 @@
      style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;">
     <a href="/home">Home</a>
     <a href="/product">Product</a>
-    <a href="/admin" th:if="${session.user.getUser_name() eq 'admin'}">Admin</a>
+    <a href="/admin" th:if="${session.user.getRole() eq 'ROLE_ADMIN'}">Admin</a>
     <a href="/informationUser">My Infor</a>
     <a href="/logout" >Logout</a>
 </div>

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+    <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>V-Store</h1>
+<div th:insert="_menu"/>
+<div th:insert="_adminMenu"/>
+<div>
+    <h2>List User</h2>
+</div>
+<div>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>User Name</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Wallet</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Enable</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="u: ${listUsers}">
+            <td th:text="${u.getId_user()}">User ID</td>
+            <td><a th:text="${u.getUser_name()}" th:href="@{/admin/editUser?(id=${u.getId_user()})}">User Name</a></td>
+            <td th:text="${u.getName()}">Name</td>
+            <td th:text="${u.getAge()}">Age</td>
+            <td th:text="${u.getWallet()}">Wallet</td>
+            <td th:text="${u.getEmail()}">Email</td>
+            <td th:text="${u.getRole()}">Role</td>
+            <td th:text="${u.getEnabled()}">Enable</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

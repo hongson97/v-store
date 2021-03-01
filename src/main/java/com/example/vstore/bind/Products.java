@@ -56,6 +56,7 @@ public class Products implements Serializable {
     public void setNumber(Long number) {
         this.number = number;
     }
-
-
+    public void setId_product(Long id_product) {
+        this.id_product = id_product;
+    }
 }

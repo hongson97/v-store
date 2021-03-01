@@ -83,7 +83,7 @@ public class Product {
         Products product = productsServer.findByID(id);
         User user = (User) session.getAttribute("user");
 
-        if (product.getNumber() >= number && user.getWallet() > product.getPrice()*number) {
+        if (product.getNumber() >= number && user.getWallet() >= product.getPrice()*number) {
             User baseUser = user;
             Products baseProduct = product;
             try {
