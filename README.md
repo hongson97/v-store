@@ -54,4 +54,14 @@
 - Bug: Logic
 - Params: {num, id}
 - Payload: num=-1&id=5
+
+### 4. GET "/infoUserVuln"
+- Bug: IDOR
+- params: id
+- payload: id=4
+
+### 5. POST "/upAVTVuln"
+- Bug: upload file avt tùy ý
+- params: image
+- payload: 
    
