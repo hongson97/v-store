@@ -46,7 +46,7 @@ public class UserService implements UserDetailsService {
 
     public void updateUser(User user) {
         User oldUser = userServer.findByUser_name1(user.getUser_name());
-        if (!user.getPassword().equals("")) {
+        if (!user.getPassword().equals("") || user.getPassword() != null) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
         else

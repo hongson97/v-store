@@ -7,7 +7,7 @@
 <body>
 <h1>V-Store</h1>
 <div th:insert="_menu"/>
-<p th:text="'Hello, ' + ${session.user.getName()} + '!'" />
+<p th:text="'Hello, ' + ${__${session.user.getName()}__} + '!'" />
 <br><img th:src="'/avt/' + ${session.user.getAvt()}" width="200" height="200">
 </body>
 </html>
