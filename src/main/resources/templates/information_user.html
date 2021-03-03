@@ -11,7 +11,7 @@
 <div>
     <h2>My Infor</h2>
 </div>
-<br><img th:src="'/avt/' + ${user.getAvt()}" width="200" height="200">
+<br><img th:src="'/getImage?name=' + ${session.user.getAvt()}" width="200" height="200">
 <div>
     <p th:text="'User name: ' + ${user.getUser_name()}"/>
     <p th:text="'Full name: ' + ${user.getName()}"/>

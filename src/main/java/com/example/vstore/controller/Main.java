@@ -172,9 +172,9 @@ public class Main {
         mode.addAttribute("avt",user.getAvt());
         return "uploadAVT";
     }
-    /*
-    @GetMapping(value = "/avt/{filename}")
-    public void serveFile(@PathVariable String filename, HttpServletResponse response, HttpServletRequest request) throws IOException  {
+
+    @GetMapping(value = "/getImage")
+    public void serveFile(@RequestParam("name") String filename, HttpServletResponse response, HttpServletRequest request) throws IOException  {
         String fileDir = "src\\main\\resources\\static\\avt";
         Path file = Paths.get(fileDir, filename);
         if (Files.exists(file)) {
@@ -197,9 +197,38 @@ public class Main {
         }
 
     }
-*/
+
     @PostMapping("/upAVTUrl")
     public String getImage(@RequestParam("url") String url, HttpSession session, ModelMap mode) throws IOException {
+        User user = (User) session.getAttribute("user");
+        if(url.equals("")) {
+            mode.addAttribute("avt",user.getAvt());
+            mode.addAttribute("msg", "URL not null!");
+            return "uploadAVT";
+        }
+
+        String fileDir = "C:\\Users\\MININT-IAEC8I7-local\\IdeaProjects\\v-store\\src\\main\\resources\\static\\avt";
+        Resource resource = resourceLoader.getResource(url);
+
+        if (resource.exists()) {
+            try {
+                FileUploadUtil.saveFileResource(resource, fileDir);
+                user.setAvt(resource.getFilename());
+                userServer.save(user);
+                mode.addAttribute("msg", "Success");
+            } catch (IOException e) {
+                mode.addAttribute("msg", e.toString());
+            }
+        }
+        else {
+            mode.addAttribute("msg", "Not found image!");
+        }
+        mode.addAttribute("avt",user.getAvt());
+        return "uploadAVT";
+    }
+
+    @PostMapping("/upAVTUrlVuln")
+    public String setImage(@RequestParam("url") String url, HttpSession session, ModelMap mode) throws IOException {
         User user = (User) session.getAttribute("user");
         if(url.equals("")) {
             mode.addAttribute("avt",user.getAvt());
