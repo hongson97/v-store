@@ -176,6 +176,6 @@ T(org.apache.commons.io.IOUtils).toString(
 ```
 
 ### 9 POST "/admin/checkAVTVuln"
-- Bug: Commant injection
+- Bug: Command injection
 - Params: name
 - Payload: name= ss')){echo 1;}else{ls;};if(('1
