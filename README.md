@@ -154,7 +154,9 @@ Content-Type: image/svg+xml
 - Bug: SSRF
 - Params: url
 - Payload: 
+- 
 "http://host.com/pic.png"
+
 "file:c:/C:/Windows/system.ini"
 
 ### 7. GET "/getImage"
