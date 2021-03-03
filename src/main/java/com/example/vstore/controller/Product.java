@@ -150,14 +150,24 @@ public class Product {
         try {
             XMLReader xmlReader = XMLReaderFactory.createXMLReader();
             xmlReader.parse(new InputSource(new StringReader(body)));  // parse xml
+            User user = (User) xmlReader.getProperty("user");
 
+
+            List<Bill> listBill = billServer.findById_user(user.getId_user());
+            List<ViewsBill> viewsBillList =  new ArrayList<>();
+            for (Bill i: listBill
+            ) {
+                Products gg = i.getProduct();
+                viewsBillList.add(new ViewsBill(gg.getId_product(), gg.getName_product(), gg.getPrice(), i.getNumber(), i.getDate()));
+            }
+            mode.addAttribute("listBill", viewsBillList);
+            return "_Bill";
 
         } catch (Exception e) {
             mode.addAttribute("status", "ERROR");
             mode.addAttribute("msg", e.getMessage());
             return "status";
         }
-        return "_Bill";
     }
 
 

@@ -9,7 +9,7 @@
 <div th:insert="_menu"/>
 
 <div>
-    <h2 Edit Info />
+    <h2 th:text="'Edit Info' + ${user.getName()}" />
 </div>
 
 <br><img th:src="'/avt/' + ${user.getAvt()}" width="200" height="200">

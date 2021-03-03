@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,7 +59,7 @@ public class Main {
 
 
     @GetMapping(value = {"/home", "/"})
-    public String home(ModelMap mode, HttpSession session){
+    public String home(ModelMap mode, HttpSession session, @RequestParam(value = "msg", required = false) String msg){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         //authentication.getPrincipal()
         if(authentication != null) {
@@ -66,6 +68,8 @@ public class Main {
         else {
             return "login";
         }
+
+        mode.addAttribute("msg", msg);
         return "home";
     }
 
@@ -100,8 +104,7 @@ public class Main {
             u.setEmail(user.getEmail());
         if (user.getAge() > 0)
             u.setAge(user.getAge());
-        if (user.getPassword() != "")
-            u.setPassword(user.getPassword());
+        u.setPassword(user.getPassword());
 
         userService.updateUser(u);
         return "/informationUser";
@@ -169,7 +172,7 @@ public class Main {
         mode.addAttribute("avt",user.getAvt());
         return "uploadAVT";
     }
-
+    /*
     @GetMapping(value = "/avt/{filename}")
     public void serveFile(@PathVariable String filename, HttpServletResponse response, HttpServletRequest request) throws IOException  {
         String fileDir = "src\\main\\resources\\static\\avt";
@@ -177,19 +180,52 @@ public class Main {
         if (Files.exists(file)) {
             String mimeType = URLConnection.guessContentTypeFromName(filename);
 
-
             response.setContentType(mimeType);
-            response.addHeader("Content-Disposition","attachment; filename="+filename);
+
+            //response.addHeader("Content-Disposition","attachment; filename="+filename);
+            response.addHeader("Vary", "Origin");
+            response.addHeader("Vary", "Access-Control-Request-Method");
+            response.addHeader("Vary", "Access-Control-Request-Headers");
+            response.addHeader("Accept-Ranges","bytes");
             try {
+
                 Files.copy(file,response.getOutputStream());
                 response.getOutputStream().flush();
             } catch (IOException e){
                 e.printStackTrace();
             }
         }
+
     }
+*/
+    @PostMapping("/upAVTUrl")
+    public String getImage(@RequestParam("url") String url, HttpSession session, ModelMap mode) throws IOException {
+        User user = (User) session.getAttribute("user");
+        if(url.equals("")) {
+            mode.addAttribute("avt",user.getAvt());
+            mode.addAttribute("msg", "URL not null!");
+            return "uploadAVT";
+        }
 
+        String fileDir = "C:\\Users\\MININT-IAEC8I7-local\\IdeaProjects\\v-store\\src\\main\\resources\\static\\avt";
+        Resource resource = resourceLoader.getResource(url);
 
+        if (resource.exists()) {
+            try {
+                FileUploadUtil.saveFileResource(resource, fileDir);
+                user.setAvt(resource.getFilename());
+                userServer.save(user);
+                mode.addAttribute("msg", "Success");
+            } catch (IOException e) {
+                mode.addAttribute("msg", e.toString());
+            }
+        }
+        else {
+            mode.addAttribute("msg", "Not found image!");
+        }
+        mode.addAttribute("avt",user.getAvt());
+        return "uploadAVT";
+    }
 
 
 
