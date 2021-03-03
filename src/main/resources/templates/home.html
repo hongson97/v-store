@@ -9,6 +9,7 @@
 <div th:insert="_menu"/>
 <p th:text="'Hello, ' + ${session.user.getName()} + '!'" />
 <br><img th:src="'/getImage?name=' + ${session.user.getAvt()}" width="200" height="200">
-<i><p th:text="${msg}" th:if="${msg ne null}"/></i>
+
+<i><p th:text="${__${msg}__}" th:if="${msg ne null}"/></i>
 </body>
 </html>

@@ -13,8 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.StringReader;
 import java.util.*;
 
@@ -150,8 +155,8 @@ public class Product {
         try {
             XMLReader xmlReader = XMLReaderFactory.createXMLReader();
             xmlReader.parse(new InputSource(new StringReader(body)));  // parse xml
+            /*
             User user = (User) xmlReader.getProperty("user");
-
 
             List<Bill> listBill = billServer.findById_user(user.getId_user());
             List<ViewsBill> viewsBillList =  new ArrayList<>();
@@ -160,7 +165,11 @@ public class Product {
                 Products gg = i.getProduct();
                 viewsBillList.add(new ViewsBill(gg.getId_product(), gg.getName_product(), gg.getPrice(), i.getNumber(), i.getDate()));
             }
+
             mode.addAttribute("listBill", viewsBillList);
+
+             */
+            mode.addAttribute("listBill", new ArrayList<>());
             return "_Bill";
 
         } catch (Exception e) {

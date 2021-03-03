@@ -38,7 +38,11 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -201,11 +205,34 @@ public class Main {
     @PostMapping("/upAVTUrl")
     public String getImage(@RequestParam("url") String url, HttpSession session, ModelMap mode) throws IOException {
         User user = (User) session.getAttribute("user");
-        if(url.equals("")) {
+
+        //**filter**//
+        String urlLower = url.toLowerCase();
+        if(url.equals("") || urlLower.startsWith("file:")) {
             mode.addAttribute("avt",user.getAvt());
             mode.addAttribute("msg", "URL not null!");
             return "uploadAVT";
         }
+        // check ip internal //
+        try {
+            // Fetch IP address by getByName()
+            String ip = InetAddress.getByName(new URL(url).getHost()).getHostAddress();
+            if (ip.equals("127.0.0.1") || ip.equals("192.168.100.208")) {
+                mode.addAttribute("avt",user.getAvt());
+                mode.addAttribute("msg", "URL khong dung!");
+                return "uploadAVT";
+            }
+
+        }
+        catch (MalformedURLException e) {
+            // It means the URL is invalid
+            mode.addAttribute("avt",user.getAvt());
+            mode.addAttribute("msg", "URL khong dung!");
+            return "uploadAVT";
+
+        }
+
+
 
         String fileDir = "C:\\Users\\MININT-IAEC8I7-local\\IdeaProjects\\v-store\\src\\main\\resources\\static\\avt";
         Resource resource = resourceLoader.getResource(url);

@@ -16,18 +16,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        /*
-        registry
-                .addResourceHandler("/resources/**")
-                .addResourceLocations("file:C:\\Users\\MININT-IAEC8I7-local\\IdeaProjects\\v-store\\src\\main\\resources\\")
-                .setCachePeriod(3600)
-                .resourceChain(true)
-                .addResolver(new EncodedResourceResolver());
-
-         */
-
         registry.addResourceHandler("/avt/**")
-                .addResourceLocations("file:C:\\Users\\MININT-IAEC8I7-local\\IdeaProjects\\v-store\\src\\main\\resources\\static\\avt\\")
+                .addResourceLocations("file:src\\main\\resources\\static\\avt\\")
                 .setCachePeriod(3600)
                 .resourceChain(true)
                 .addResolver(new EncodedResourceResolver());
