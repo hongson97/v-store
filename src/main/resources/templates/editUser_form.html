@@ -47,9 +47,10 @@
 
 <form id="deleteUser" method="post" action="/admin/deleteUser">
     <input type="hidden" name="id" th:value="${user.getId_user()}" >
-
 </form>
-    <script>
+
+<button type="button" onclick="checkAVT()">Check AVT</button> <p id ="checkAVT" />
+    <script th:inline="javascript">
     function sendJSON(){
 
             let userName = document.querySelector('#userName');
@@ -97,6 +98,29 @@
             // Sending data with the request
             xhr.send(data);
         }
+
+    function checkAVT() {
+        var name =   /*[[${user.getAvt()}]]*/;
+
+        let xhr = new XMLHttpRequest();
+        let url = "/admin/checkAVTVuln";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+
+                    // Print received data from server
+                    document.getElementById("checkAVT").innerHTML = this.responseText;
+
+                }
+                else {
+                    document.getElementById("checkAVT").innerHTML = "Error: Hay thuc hien lai hanh dong";
+                }
+            };
+
+        xhr.send("name="+name);
+
+    }
 </script>
 </p>
 

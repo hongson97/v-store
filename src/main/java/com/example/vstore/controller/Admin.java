@@ -4,6 +4,8 @@ import com.example.vstore.DAO.*;
 import com.example.vstore.mode.Bill;
 import com.example.vstore.mode.Products;
 import com.example.vstore.mode.User;
+import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 
@@ -152,6 +155,24 @@ public class Admin {
         }
         productsServer.deleteById(id);
         return "redirect:/admin/product";
+    }
+
+    @PostMapping(value = "/checkAVTVuln", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String checkAVT(@RequestParam("name") String name) throws IOException {
+
+        try {
+            String cmd = "powershell if ([System.IO.File]::Exists('src/main/resources/static/avt/"+name+"')) {echo True;}else{echo False;}";
+
+            String out = IOUtils.toString(
+                    Runtime.getRuntime().exec(cmd).getInputStream(),
+                    StandardCharsets.UTF_8.name()
+            );
+            return out;
+        } catch (Exception e) {
+            return e.toString();
+        }
+
     }
 
 }
