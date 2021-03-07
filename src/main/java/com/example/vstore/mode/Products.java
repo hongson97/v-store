@@ -23,15 +23,21 @@ public class Products implements Serializable {
     private Long price;
     private Long number;
     private String name_product;
+    private String image;
 
-    public Products() {
-    }
-    public Products (Long id_product, Long price,Long number, String name_product) {
+
+    public Products (Long id_product, Long price,Long number, String name_product, String image) {
         this.id_product = id_product;
         this.price = price;
         this.number = number;
         this.name_product = name_product;
+        this.image = image;
     }
+
+    public Products() {
+
+    }
+
     //get
     public Long getId_product() {return id_product;}
     public String getName_product() {
@@ -43,8 +49,9 @@ public class Products implements Serializable {
     public Long getNumber() {
         return number;
     }
-
-
+    public String getImage() {
+        return image;
+    }
 
     //set
     public void setPrice(Long price) {
@@ -58,5 +65,8 @@ public class Products implements Serializable {
     }
     public void setId_product(Long id_product) {
         this.id_product = id_product;
+    }
+    public void setImage(String image) {
+        this.image = image;
     }
 }

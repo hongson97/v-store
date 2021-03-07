@@ -102,10 +102,12 @@ public class Main {
     @PostMapping(value = "/informationUser/edit", produces = MediaType.APPLICATION_JSON_VALUE)
     public String updateInfo(HttpSession session, @RequestBody User user) {
         User u = (User) session.getAttribute("user");
-        if (user.getName() != "")
+        if (!user.getName().equals(""))
             u.setName(user.getName());
-        if (user.getEmail() != "")
+        if (!user.getEmail().equals(""))
             u.setEmail(user.getEmail());
+        if (!user.getPreferred().equals(""))
+            u.setPreferred(user.getPreferred());
         if (user.getAge() > 0)
             u.setAge(user.getAge());
         u.setPassword(user.getPassword());
@@ -119,7 +121,7 @@ public class Main {
     public String upAVTForm(HttpSession session, ModelMap mode) {
         User user = (User) session.getAttribute("user");
 
-        if (user.getAvt() != null) {
+        if (user.getAvt() != null || !user.getAvt().equals("")) {
             mode.addAttribute("avt", user.getAvt());
         }
         else
@@ -179,7 +181,7 @@ public class Main {
 
     @GetMapping(value = "/getImage")
     public void serveFile(@RequestParam("name") String filename, HttpServletResponse response, HttpServletRequest request) throws IOException  {
-        String fileDir = "src\\main\\resources\\static\\avt";
+        String fileDir = "C:\\Users\\MININT-IAEC8I7-local\\IdeaProjects\\v-store - new\\src\\main\\resources\\static\\avt";
         Path file = Paths.get(fileDir, filename);
         if (Files.exists(file)) {
             String mimeType = URLConnection.guessContentTypeFromName(filename);
@@ -234,7 +236,7 @@ public class Main {
 
 
 
-        String fileDir = "C:\\Users\\MININT-IAEC8I7-local\\IdeaProjects\\v-store\\src\\main\\resources\\static\\avt";
+        String fileDir = "src\\main\\resources\\static\\avt";
         Resource resource = resourceLoader.getResource(url);
 
         if (resource.exists()) {
@@ -263,7 +265,7 @@ public class Main {
             return "uploadAVT";
         }
 
-        String fileDir = "C:\\Users\\MININT-IAEC8I7-local\\IdeaProjects\\v-store\\src\\main\\resources\\static\\avt";
+        String fileDir = "src\\main\\resources\\static\\avt";
         Resource resource = resourceLoader.getResource(url);
 
         if (resource.exists()) {

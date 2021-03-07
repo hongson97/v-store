@@ -35,7 +35,8 @@ public class ProductsDAO extends JdbcDaoSupport {
 
         List<Products> products = new ArrayList<>();
         while (rs.next()) {
-            Products p = new Products(rs.getLong("id_product"), rs.getLong("price"),rs.getLong("number"), rs.getString("name_product"));
+            Products p = new Products(rs.getLong("id_product"), rs.getLong("price"),
+                    rs.getLong("number"), rs.getString("name_product"), rs.getString("image"));
             products.add(p);
         }
         return products;

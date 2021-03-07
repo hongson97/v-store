@@ -2,10 +2,13 @@ package com.example.vstore.controller;
 
 import com.example.vstore.DAO.*;
 import com.example.vstore.mode.Bill;
+import com.example.vstore.mode.FileUploadUtil;
 import com.example.vstore.mode.Products;
 import com.example.vstore.mode.User;
 import org.apache.commons.io.IOUtils;
 import org.apache.tomcat.util.json.JSONParser;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,6 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -29,6 +36,8 @@ public class Admin {
     ProductsServer productsServer;
     @Autowired
     BillServer billServer;
+    @Autowired
+    ResourceLoader resourceLoader;
 
     @GetMapping(value = {"","/user"})
     public String listUser(ModelMap mode, final HttpSession session) throws IOException, InterruptedException {
@@ -66,7 +75,8 @@ public class Admin {
 
         if (user.getEnabled() == null)
             user.setEnabled(Boolean.TRUE);
-
+        user.setAvt(u.getAvt());
+        user.setPreferred(user.getPreferred());
         user.setId_user(u.getId_user());
         userService.updateUser(user);
         return "/admin/editUser?id="+user.getId_user()+"&error=Update thanh cong!";
@@ -135,7 +145,43 @@ public class Admin {
             product.setId_product(null);
         }
         if (product.getPrice() < 0)
-            return "/admin/editProduct?error=Price khong hop le";
+            return "/admin/editProduct?id="+product.getId_product()+"&error=Price khong hop le";
+        if (product.getImage().equals("") || product.getImage() == null)
+            product.setImage(p.getImage());
+        else {
+            //**filter**//
+            String urlLower = product.getImage();
+            // check ip internal //
+            try {
+                // Fetch IP address by getByName()
+                String ip = InetAddress.getByName(new URL(product.getImage()).getHost()).getHostAddress();
+                if (urlLower.startsWith("file:") || ip.equals("127.0.0.1") || ip.equals("192.168.100.208")) {
+                    return "/admin/editProduct?id="+product.getId_product()+"&error=URL Image khong dung!";
+                }
+            }
+            catch (MalformedURLException | UnknownHostException e) {
+                // It means the URL is invalid
+                return "/admin/editProduct?error="+e.toString();
+
+            }
+
+            String fileDir = "src\\main\\resources\\static\\products";
+            Resource resource = resourceLoader.getResource(product.getImage());
+
+            if (resource.exists()) {
+                try {
+                    FileUploadUtil.saveFileResource(resource, fileDir);
+                    product.setImage(resource.getFilename());
+                    productsServer.save(product);
+                    return "/admin/editProduct?id="+product.getId_product()+"&error=Update Susses!";
+                } catch (IOException e) {
+                    return "/admin/editProduct?id="+product.getId_product()+"&error=" + e.toString();
+                }
+            }
+            else {
+                return "/admin/editProduct?error=Not found image!";
+            }
+        }
         productsServer.save(product);
         return "/admin/product";
 

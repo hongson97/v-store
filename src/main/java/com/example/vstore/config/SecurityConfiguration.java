@@ -47,6 +47,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/login", "/sign-up").permitAll()  //chap nhan tat ca, ke ca chua dang nhap
                     .antMatchers("/admin/**").hasRole("ADMIN")      // chi admin co quyen try cap
+                    .antMatchers("/css/**").permitAll()
+                    .antMatchers("/scss/**").permitAll()
+                    .antMatchers("/fonts/**").permitAll()
+                    .antMatchers("/images/**").permitAll()
+                    .antMatchers("/js/**").permitAll()
+                    .antMatchers("/vendor/").permitAll()
                     .anyRequest().authenticated()       // tat ca cac endpoints khac deu phai dang nhap
                 .and()
                 .formLogin()

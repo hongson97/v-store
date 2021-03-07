@@ -31,7 +31,8 @@ public class SignUp {
         }
         if (user.getPassword() == null) {
             return "/sign-up?error=Hay nhap password!";
-        }
+        } else if(user.getUser_name().equals(""))
+            return "/sign-up?error=Hay nhap user name!";
         user.setRole("ROLE_USER");
         user.setWallet(10000L);
         userService.signUpUser(user);

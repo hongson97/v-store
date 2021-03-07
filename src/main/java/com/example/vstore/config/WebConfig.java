@@ -21,7 +21,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .setCachePeriod(3600)
                 .resourceChain(true)
                 .addResolver(new EncodedResourceResolver());
-
+        registry.addResourceHandler("/products/**")
+                .addResourceLocations("file:src\\main\\resources\\static\\products\\");
 
     }
 

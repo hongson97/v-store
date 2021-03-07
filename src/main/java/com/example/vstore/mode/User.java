@@ -39,13 +39,14 @@ public class User implements Serializable, UserDetails {
     private String avt = "default.jpg";
     private String role;
     private Boolean enabled;
+    private String preferred;
 
 
 
     public  User() {
     }
     public  User(Long id_user, String user_name, String password, String name, int age,
-                 Long wallet, String email, String avt, String role, Boolean enable) {
+                 Long wallet, String email, String avt, String role, Boolean enable, String preferred) {
         this.id_user = id_user;
         this.user_name = user_name;
         this.password = password;
@@ -56,6 +57,7 @@ public class User implements Serializable, UserDetails {
         this.role =role;
         this.enabled=enable;
         this.avt =avt;
+        this.preferred = preferred;
     }
     // Get
     public Long getId_user() {return id_user;}
@@ -82,6 +84,9 @@ public class User implements Serializable, UserDetails {
     }
     public String getName() {
         return name;
+    }
+    public String getPreferred() {
+        return preferred;
     }
 
     @Override
@@ -116,6 +121,9 @@ public class User implements Serializable, UserDetails {
     }
     public void setAvt(String avt) {
         this.avt = avt;
+    }
+    public void setPreferred(String preferred) {
+        this.preferred = preferred;
     }
 
     @Override

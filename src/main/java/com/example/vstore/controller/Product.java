@@ -62,6 +62,7 @@ public class Product {
              productsList = productsDAO.findUnsafeByName_product(productName);
         }
         catch (Exception ex){
+            mode.addAttribute("status","ERROR");
             mode.addAttribute("msg", ex.getMessage());
             return "status";
         }
@@ -77,6 +78,7 @@ public class Product {
             mode.addAttribute("status", "ERROR");
             mode.addAttribute("title","NOT FOUND");
             mode.addAttribute("msg", "Không tìm thấy mặt hàng này!");
+            return "status";
         }
         mode.addAttribute("product", product);
         return "show_product";
@@ -107,7 +109,7 @@ public class Product {
                 product.setNumber(product.getNumber()-number);
                 productsServer.save(product);
                 //done
-                mode.addAttribute("status", "STATUS");
+                mode.addAttribute("status", "Thanks You");
                 mode.addAttribute("title", "THÀNH CÔNG");
                 mode.addAttribute("msg","Giao dịch thành công");
                 return "status";
