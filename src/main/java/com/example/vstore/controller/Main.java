@@ -181,7 +181,7 @@ public class Main {
 
     @GetMapping(value = "/getImage")
     public void serveFile(@RequestParam("name") String filename, HttpServletResponse response, HttpServletRequest request) throws IOException  {
-        String fileDir = "C:\\Users\\MININT-IAEC8I7-local\\IdeaProjects\\v-store - new\\src\\main\\resources\\static\\avt";
+        String fileDir = "src\\main\\resources\\static\\avt";
         Path file = Paths.get(fileDir, filename);
         if (Files.exists(file)) {
             String mimeType = URLConnection.guessContentTypeFromName(filename);
@@ -219,7 +219,7 @@ public class Main {
         try {
             // Fetch IP address by getByName()
             String ip = InetAddress.getByName(new URL(url).getHost()).getHostAddress();
-            if (ip.equals("127.0.0.1") || ip.equals("192.168.100.208")) {
+            if (ip.equals("127.0.0.1")) {
                 mode.addAttribute("avt",user.getAvt());
                 mode.addAttribute("msg", "URL khong dung!");
                 return "uploadAVT";
