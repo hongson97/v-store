@@ -25,11 +25,10 @@ public class Login {
     UserService userService;
 
     @GetMapping(value = "/login")
-    public String loginFrom(ModelMap mode, HttpSession session, @RequestParam(value = "error", required = false) String error) {
+    public String loginFrom(ModelMap mode, HttpSession session) {
         if(session.getAttribute("user") != null) {
             return "home";
         }
-        mode.addAttribute("msg", error);
         return "login_form";
     }
 
